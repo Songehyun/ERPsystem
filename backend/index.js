@@ -28,10 +28,22 @@ sql
   .then((pool) => {
     if (pool.connected) console.log('Connected to MSSQL');
 
-    // GET 요청 처리 - 재고 목록 가져오기
+    // GET 요청 처리 - 재고 목록 가져오기 (페이징 포함)
     app.get('/api/inventory', async (req, res) => {
       try {
-        const result = await pool.request().query('SELECT * FROM Inventory');
+        const { page = 1, limit = 15 } = req.query; // 페이지 번호와 한 페이지당 항목 수를 쿼리에서 가져옴
+        const offset = (page - 1) * limit; // 가져올 데이터의 시작점 계산
+
+        // 페이징을 고려한 데이터베이스 쿼리
+        const result = await pool
+          .request()
+          .input('limit', sql.Int, limit)
+          .input('offset', sql.Int, offset)
+          .query(
+            'SELECT * FROM Inventory ORDER BY InventoryID OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY',
+          );
+
+        // 결과 전송
         res.json(result.recordset);
       } catch (err) {
         res.status(500).send(err.message);
