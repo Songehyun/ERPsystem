@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
@@ -6,29 +7,29 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li className="mb-4">
-            <a href="/" className="hover:text-gray-300">
+            <Link to="/new-code-register" className="hover:text-gray-300">
               신규코드등록
-            </a>
+            </Link>
           </li>
           <li className="mb-4">
-            <a href="/" className="hover:text-gray-300">
+            <Link to="/stock-management" className="hover:text-gray-300">
               입고등록
-            </a>
+            </Link>
           </li>
           <li className="mb-4">
-            <a href="/" className="hover:text-gray-300">
+            <Link to="/product-management" className="hover:text-gray-300">
               출고관리(제품)
-            </a>
+            </Link>
           </li>
           <li className="mb-4">
-            <a href="/" className="hover:text-gray-300">
+            <Link to="/consumable-management" className="hover:text-gray-300">
               출고관리(소모품)
-            </a>
+            </Link>
           </li>
           <li className="mb-4">
-            <a href="/" className="hover:text-gray-300">
+            <Link to="/inventory-view" className="hover:text-gray-300">
               재고조회
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
