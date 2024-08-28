@@ -16,9 +16,8 @@ const InventoryList = () => {
         params: { page, limit: 15 },
       })
       .then((response) => {
-        setInventory(response.data);
-        // 총 페이지 수 계산 (전체 아이템 수를 알 수 있다면)
-        // setTotalPages(Math.ceil(totalItems / 15));
+        setInventory(response.data.items);
+        setTotalPages(Math.ceil(response.data.totalItems / 15)); // 전체 페이지 수 계산
       })
       .catch((error) => {
         console.error('There was an error fetching the inventory!', error);

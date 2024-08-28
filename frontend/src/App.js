@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import InventoryList from './InventoryList';
+import InventoryList from './InventoryList'; // InventoryList를 사용
 import NewCodeRegister from './NewCodeRegister';
 import StockManagement from './StockManagement';
-import ProductManagement from './ProductManagement';
 import ConsumableManagement from './ConsumableManagement';
 import InventoryView from './InventoryView';
 
@@ -12,10 +11,11 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<InventoryList />} />
+          <Route path="/" element={<InventoryList />} /> {/* 메인 페이지 */}
           <Route path="/new-code-register" element={<NewCodeRegister />} />
           <Route path="/stock-management" element={<StockManagement />} />
-          <Route path="/product-management" element={<ProductManagement />} />
+          <Route path="/product-management" element={<InventoryList />} />{' '}
+          {/* 이 경로에 InventoryList 연결 */}
           <Route
             path="/consumable-management"
             element={<ConsumableManagement />}

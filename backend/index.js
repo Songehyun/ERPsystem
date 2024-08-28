@@ -31,8 +31,14 @@ sql
     // GET 요청 처리 - 재고 목록 가져오기 (페이징 포함)
     app.get('/api/inventory', async (req, res) => {
       try {
-        const { page = 1, limit = 15 } = req.query; // 페이지 번호와 한 페이지당 항목 수를 쿼리에서 가져옴
-        const offset = (page - 1) * limit; // 가져올 데이터의 시작점 계산
+        const { page = 1, limit = 15 } = req.query;
+        const offset = (page - 1) * limit;
+
+        // 전체 항목 수 계산
+        const totalItemsResult = await pool
+          .request()
+          .query('SELECT COUNT(*) AS totalItems FROM Inventory');
+        const totalItems = totalItemsResult.recordset[0].totalItems;
 
         // 페이징을 고려한 데이터베이스 쿼리
         const result = await pool
@@ -43,8 +49,8 @@ sql
             'SELECT * FROM Inventory ORDER BY InventoryID OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY',
           );
 
-        // 결과 전송
-        res.json(result.recordset);
+        // 데이터와 전체 항목 수 반환
+        res.json({ items: result.recordset, totalItems });
       } catch (err) {
         res.status(500).send(err.message);
       }

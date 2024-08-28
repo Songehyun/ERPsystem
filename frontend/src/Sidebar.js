@@ -18,6 +18,8 @@ const Sidebar = () => {
           </li>
           <li className="mb-4">
             <Link to="/product-management" className="hover:text-gray-300">
+              {' '}
+              {/* product-management로 연결 */}
               출고관리(제품)
             </Link>
           </li>
